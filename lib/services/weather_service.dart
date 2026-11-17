@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 
 import '../models/weather_models.dart';
 
-// 기존 HTTP/JSON 학습을 활용하되, 11주차에는 API 파서를 제공한다.
+// 기존 HTTP/JSON 학습을 활용하되, lab09에서는 API 파서를 제공한다.
 class WeatherService {
   Future<WeatherInfo> fetch(Region region) async {
     final url = Uri.https('api.open-meteo.com', '/v1/forecast', {

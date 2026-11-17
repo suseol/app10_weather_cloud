@@ -39,7 +39,7 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
     }
   }
 
-  // 12주차 제공: GPS 좌표 대신 가장 가까운 도시를 고른다.
+  // lab10 제공: GPS 좌표 대신 가장 가까운 도시를 고른다.
   Future<void> _useCurrentLocation() async {
     try {
       final position = await LocationService().getCurrent(); // 기기 좌표

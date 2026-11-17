@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-// 11주차에는 모델을 제공하고, 화면에서 객체를 생성해 사용한다.
+// lab09에서는 모델을 제공하고, 화면에서 객체를 생성해 사용한다.
 class Region {
   final String id; // 앱 안에서 지역을 구분하는 값 (Firestore 조회 키)
   final String name; // 화면에 표시할 지역명
@@ -10,7 +10,7 @@ class Region {
   const Region(this.id, this.name, this.latitude, this.longitude);
 }
 
-// 12주차: 사진을 함께 모으는 단위가 되는 도시 16곳 (좌표는 시청 부근)
+// lab10: 사진을 함께 모으는 단위가 되는 도시 16곳 (좌표는 시청 부근)
 const regions = <Region>[
   Region('seoul', '서울', 37.5665, 126.9780),
   Region('incheon', '인천', 37.4563, 126.7052),
@@ -92,7 +92,7 @@ class WeatherRecord {
 
   String get sourceLabel => shotLabel(fromCamera, capturedAt);
 
-  // 12주차 제공: Firestore에 저장할 문서 내용(Map)으로 바꾼다.
+  // lab10 제공: Firestore에 저장할 문서 내용(Map)으로 바꾼다.
   Map<String, dynamic> toMap({
     required String ownerUid,
     required String imageUrl,
@@ -112,7 +112,7 @@ class WeatherRecord {
   }
 }
 
-// 12주차 제공: Firestore에서 읽어 온 사진 한 장
+// lab10 제공: Firestore에서 읽어 온 사진 한 장
 class CloudPhoto {
   final String id; // Firestore 문서 ID
   final String ownerUid; // 올린 사람

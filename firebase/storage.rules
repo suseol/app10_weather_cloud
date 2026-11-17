@@ -3,15 +3,22 @@ service firebase.storage {
   match /b/{bucket}/o {
 
     // 사진은 photos/{내 uid}/ 폴더에만 올리고 지울 수 있음
+    // {uid}, {fileName}: 경로의 이 자리에 오는 값을 이름으로 받아 아래 조건에서 쓴다.
     match /photos/{uid}/{fileName} {
+      // 로그인한 사람은 사진 파일을 볼 수 있다(화면은 Firestore 문서의 imageUrl로 연다).
       allow read: if request.auth != null;
 
-      // 2MB 미만의 이미지만
+      // create: 이 경로에 파일이 아직 없을 때 올리기. 내 uid 폴더에만, 2MB 미만, 이미지 형식만.
+      // request.resource: 지금 올리려는 파일(size, contentType 등).
       allow create: if request.auth != null && request.auth.uid == uid
         && request.resource.size < 2 * 1024 * 1024
         && request.resource.contentType.matches('image/.*');
 
+      // 내 폴더의 파일만 지울 수 있다.
       allow delete: if request.auth != null && request.auth.uid == uid;
+
+      // update(이미 있는 파일 덮어쓰기)는 allow 줄이 없으므로 거부된다. 규칙은 허락하지 않은 동작을 모두 거부한다.
+      // 파일 이름이 올린 순간의 밀리초라 덮어쓸 일도 없다.
     }
   }
 }

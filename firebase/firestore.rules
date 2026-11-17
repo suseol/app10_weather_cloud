@@ -14,15 +14,20 @@ service cloud.firestore {
 
     // 출입 코드(config/lab): 앱에서는 읽을 수도 쓸 수도 없음(콘솔에서만 관리)
     match /config/{docId} {
-      allow read, write: if false;
+      allow read, write: if false; // if false: 앱의 요청은 모두 거부(콘솔에서만 관리)
     }
 
     // 실습 서버 출입 등록: 내 문서만, 출입 코드가 맞을 때 처음 한 번만 만들 수 있음
     match /labMembers/{uid} {
       allow read: if signedIn() && request.auth.uid == uid;
+      // create: 문서가 아직 없을 때의 쓰기. 내 uid 문서이고 출입 코드가 정답과 같을 때만 허락
       allow create: if signedIn() && request.auth.uid == uid
         && request.resource.data.accessCode ==
            get(/databases/$(database)/documents/config/lab).data.accessCode;
+      // 이미 있는 문서를 고치거나(update) 지우는(delete) 요청은 모두 거부한다.
+      // if false: 조건이 늘 거짓이라 어떤 요청도 허락하지 않는다는 뜻.
+      // 같은 uid로 set()을 다시 부르면 update로 검사되어 여기서 거부된다(그래서 처음 한 번만 등록).
+      // 규칙은 allow로 허락하지 않은 동작을 원래 모두 거부하므로 이 줄이 없어도 결과는 같다. 일부러 막았다는 뜻을 분명히 하려고 적어 둔다.
       allow update, delete: if false;
     }
 

@@ -6,7 +6,7 @@ import 'package:geolocator/geolocator.dart';
 import '../config/photo_rules.dart';
 import '../models/weather_models.dart';
 
-// 12주차 제공 코드: 사진 시각과 위치를 규칙에 맞는지 검사한다.
+// lab10 제공 코드: 사진 시각과 위치를 규칙에 맞는지 검사한다.
 class PhotoRuleService {
   // 갤러리 사진의 촬영 시각(EXIF DateTimeOriginal). 없으면 null
   Future<DateTime?> readCapturedAt(File file) async {
@@ -46,7 +46,7 @@ class PhotoRuleService {
     return bestKm <= PhotoRules.maxDistanceKm ? best : null;
   }
 
-  // 화면에 보여 줄 순서 (S06에서 사용)
+  // 화면에 보여 줄 순서 (S08 선택 기능에서 사용)
   // 최근 사진(popularWindowHours 안)은 좋아요 많은 순으로 앞에, 나머지는 촬영 시각 최신 순.
   // Firestore는 배열 길이(좋아요 수)로 정렬할 수 없어서 받은 목록을 앱에서 다시 정렬한다.
   List<CloudPhoto> sortForDisplay(List<CloudPhoto> photos) {

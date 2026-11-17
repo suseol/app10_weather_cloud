@@ -4,7 +4,7 @@
 // 2. 이 파일과 같은 폴더(lib/config/)에 넣는다.
 // 3. firebase_config.dart 는 .gitignore에 있어 GitHub에 올라가지 않는다.
 //
-// 값은 Firebase 콘솔 → 프로젝트 설정 → 내 앱에서 확인할 수 있다.
+// 값은 Firebase 콘솔 → 설정 → 일반 → 내 앱에서 확인할 수 있다.
 import 'package:firebase_core/firebase_core.dart';
 
 const firebaseOptions = FirebaseOptions(
@@ -16,5 +16,6 @@ const firebaseOptions = FirebaseOptions(
 );
 
 // 실습 서버 출입 코드: 교수 Firebase를 실습 참가자만 쓰도록 하는 비밀번호
+// Firebase 기능이 아니라 이 수업에서 만든 장치다(config/lab 문서와 보안 규칙).
 // 상용 앱이라면 회원가입 + App Check로 대신한다.
 const labAccessCode = 'PASTE_LAB_ACCESS_CODE';

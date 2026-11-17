@@ -39,7 +39,7 @@ class _CreatePhotoPageState extends State<CreatePhotoPage> {
     if (image == null || !mounted) return; // 취소 또는 화면 종료
     final fromCamera = source == ImageSource.camera;
 
-    // 12주차 제공: 카메라는 지금, 갤러리는 EXIF 촬영 시각을 확인한다.
+    // lab10 제공: 카메라는 지금, 갤러리는 EXIF 촬영 시각을 확인한다.
     final rules = PhotoRuleService();
     final capturedAt = fromCamera
         ? DateTime.now()

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'screens/weather_home_page.dart';
 
-void main() => runApp(const WeatherLabApp());
+void main() {
+  runApp(const WeatherLabApp());
+}
 
 class WeatherLabApp extends StatelessWidget {
   const WeatherLabApp({super.key});
