@@ -26,6 +26,7 @@ flutter run
 | `lib/models/weather_models.dart` | 도시 16곳, 날씨, 사진 기록(`WeatherRecord`), 클라우드 사진(`CloudPhoto`) |
 | `lib/services/` | 날씨, 위치, AI 음성, 사진 규칙 검사 |
 | `lib/screens/` | 홈 화면, 사진 등록 화면 |
+| `checkpoints/` | 주요 단계(S02, S04, S05, S07, 선택까지 S09)를 마친 코드. 수업 중 놓쳤을 때 복사해서 따라잡는다(폴더 안 README) |
 | `firebase/` | 보안 규칙 원본(`firestore.rules`, `storage.rules`). 수업용 프로젝트에 이미 게시되어 있어 학생은 붙여 넣지 않는다 |
 
 ## 에뮬레이터 준비
