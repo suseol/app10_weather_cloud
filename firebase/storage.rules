@@ -1,0 +1,17 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // 사진은 photos/{내 uid}/ 폴더에만 올리고 지울 수 있음
+    match /photos/{uid}/{fileName} {
+      allow read: if request.auth != null;
+
+      // 2MB 미만의 이미지만
+      allow create: if request.auth != null && request.auth.uid == uid
+        && request.resource.size < 2 * 1024 * 1024
+        && request.resource.contentType.matches('image/.*');
+
+      allow delete: if request.auth != null && request.auth.uid == uid;
+    }
+  }
+}

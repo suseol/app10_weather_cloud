@@ -1,0 +1,46 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    // 실습 서버 출입 코드로 labMembers에 등록된 사람
+    function isMember() {
+      return signedIn()
+        && exists(/databases/$(database)/documents/labMembers/$(request.auth.uid));
+    }
+
+    // 출입 코드(config/lab): 앱에서는 읽을 수도 쓸 수도 없음(콘솔에서만 관리)
+    match /config/{docId} {
+      allow read, write: if false;
+    }
+
+    // 실습 서버 출입 등록: 내 문서만, 출입 코드가 맞을 때 처음 한 번만 만들 수 있음
+    match /labMembers/{uid} {
+      allow read: if signedIn() && request.auth.uid == uid;
+      allow create: if signedIn() && request.auth.uid == uid
+        && request.resource.data.accessCode ==
+           get(/databases/$(database)/documents/config/lab).data.accessCode;
+      allow update, delete: if false;
+    }
+
+    // 날씨 사진
+    match /photos/{photoId} {
+      allow read: if isMember();
+
+      // 내 이름으로만, 좋아요 0개로 시작
+      allow create: if isMember()
+        && request.resource.data.ownerUid == request.auth.uid
+        && request.resource.data.likedBy == [];
+
+      // 다른 사람 사진은 좋아요 목록만 바꿀 수 있음
+      allow update: if isMember()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['likedBy']);
+
+      // 내 사진만 삭제
+      allow delete: if isMember() && resource.data.ownerUid == request.auth.uid;
+    }
+  }
+}
